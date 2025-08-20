@@ -18,17 +18,22 @@ header {
 main#dashboard {
     flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 .botones-dashboard {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .botones-dashboard button {
+    position: relative;
     padding: 1.5rem 3rem;
     font-size: 1.2rem;
     border: none;
@@ -37,13 +42,37 @@ main#dashboard {
     background: #0088cc;
     color: white;
     transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .botones-dashboard button:hover {
     background: #005577;
 }
 
+.estado {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.estado-verde { background: #28a745; }  
+.estado-amarillo { background: #ffc107; } 
+.estado-rojo { background: #dc3545; }    
+
 footer {
     background: #ddd;
     padding: 1rem;
+    margin-top: auto;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .botones-dashboard button {
+        font-size: 1rem;
+        padding: 1rem 2rem;
+    }
 }
