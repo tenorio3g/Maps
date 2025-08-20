@@ -1,42 +1,60 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f4f6f9;
-  color: #333;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    color: #333;
+    display: flex;
+    min-height: 100vh;
 }
 
 header {
-  background: #004466;
-  color: white;
-  padding: 1rem;
-  text-align: center;
+    background: #004466;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 10;
 }
 
-nav button {
-  margin: 0.5rem;
-  padding: 0.7rem 1.2rem;
-  border: none;
-  background: #0088cc;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+aside#menu-lateral {
+    width: 200px;
+    background: #006699;
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100%;
 }
 
-nav button:hover {
-  background: #006699;
+aside#menu-lateral button {
+    padding: 1rem;
+    margin: 5px;
+    border: none;
+    background: #0088cc;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: left;
 }
 
-main {
-  padding: 2rem;
-  text-align: center;
+aside#menu-lateral button:hover {
+    background: #005577;
+}
+
+main#dashboard {
+    margin-left: 210px;
+    padding: 100px 20px 20px 20px;
+    flex: 1;
+    min-height: calc(100vh - 60px);
 }
 
 footer {
-  background: #ddd;
-  text-align: center;
-  padding: 1rem;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+    background: #ddd;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
