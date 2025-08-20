@@ -1,32 +1,40 @@
-// Referencias
-const contenido = document.getElementById("contenido");
-const btnLeccion = document.getElementById("btnLeccion");
-const btnEjercicio = document.getElementById("btnEjercicio");
-const btnSimulador = document.getElementById("btnSimulador");
+const dashboard = document.getElementById("dashboard");
+const botones = document.querySelectorAll("#menu-lateral button");
 
-// Funciones
-function mostrarLecciones() {
-  contenido.innerHTML = `
-    <h2>Lecciones de PLC</h2>
-    <p>Aquí aparecerán las lecciones paso a paso.</p>
-  `;
+botones.forEach(btn => {
+    btn.addEventListener("click", () => {
+        const modulo = btn.dataset.modulo;
+        cargarModulo(modulo);
+    });
+});
+
+function cargarModulo(modulo) {
+    switch(modulo) {
+        case "actividades":
+            dashboard.innerHTML = `
+                <h2>📅 Plan de Actividades</h2>
+                <p>Aquí se integrará su gestor de tareas con cronómetro.</p>
+            `;
+            break;
+        case "medidores":
+            dashboard.innerHTML = `
+                <h2>💧 Monitoreo de Medidores de Agua</h2>
+                <p>Aquí se mostrarán las gráficas en tiempo real y alarmas.</p>
+            `;
+            break;
+        case "mapa":
+            dashboard.innerHTML = `
+                <h2>🗺️ Mapa de Equipos</h2>
+                <p>Aquí se integrará su mapa interactivo de la planta.</p>
+            `;
+            break;
+        case "produccion":
+            dashboard.innerHTML = `
+                <h2>🚚 Carrito / Logística</h2>
+                <p>Simulación y monitoreo de los carritos de transporte.</p>
+            `;
+            break;
+        default:
+            dashboard.innerHTML = `<p>Módulo no encontrado</p>`;
+    }
 }
-
-function mostrarEjercicios() {
-  contenido.innerHTML = `
-    <h2>Ejercicios Prácticos</h2>
-    <p>Aquí estarán los ejercicios interactivos.</p>
-  `;
-}
-
-function mostrarSimulador() {
-  contenido.innerHTML = `
-    <h2>Simulador de PLC</h2>
-    <p>Aquí podrás probar la lógica en un simulador.</p>
-  `;
-}
-
-// Eventos
-btnLeccion.addEventListener("click", mostrarLecciones);
-btnEjercicio.addEventListener("click", mostrarEjercicios);
-btnSimulador.addEventListener("click", mostrarSimulador);
