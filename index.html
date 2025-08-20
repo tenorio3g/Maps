@@ -3,235 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Localizador de Equipos</title>
-  <style>
-    #mapa {
-      position: relative;
-      width: 100%;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .ubicacion {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: red;
-      border-radius: 50%;
-      cursor: pointer;
-      animation: pulsar 1.5s infinite;
-    }
-    @keyframes pulsar {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.5); opacity: 0.7; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    #info {
-      display: none;
-      position: absolute;
-      z-index: 1000;
-      background-color: white;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      max-width: 300px;
-    }
-    #info img { max-width: 100px; height: auto; cursor: pointer; }
-    #modalImagen {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      text-align: center;
-    }
-    #modalImagen img {
-      margin-top: 50px;
-      max-width: 80%;
-      height: auto;
-    }
-    #modalImagen .close {
-      position: absolute;
-      top: 20px;
-      right: 35px;
-      color: white;
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #masInfo {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: white;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      max-width: 500px;
-    }
-    #masInfo .close {
-      position: absolute;
-      top: 10px; right: 15px;
-      font-size: 20px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #coords {
-      position: absolute;
-      top: 10px; left: 10px;
-      z-index: 1000;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-  </style>
+  <title>Sistema de Aprendizaje PLC</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Localizador de Equipos</h1>
-  
-  <!-- Selector de capas -->
-  <label for="capa">Seleccionar capa:</label>
-  <select id="capa" onchange="cambiarCapa()">
-    <option value="capa1">Mapa Planta</option>
-    <option value="capa2">Mapa Refrigeración</option>
-    <option value="capa3">Mapa Eléctrico</option>
-  </select>
-  
-  <br><br>
-  
-  <input type="text" id="busqueda" placeholder="Buscar número de equipo">
-  <button onclick="buscarUbicacion()">Buscar</button>
-  
-  <div id="mapa">
-    <img id="imagenMapa" src="" alt="Mapa de la Planta" style="width:100%;">
-    <div id="coords"></div>
-  </div>
-  
-  <div id="info"></div>
-  
-  <div id="modalImagen">
-    <span class="close" onclick="cerrarModal()">&times;</span>
-    <img id="imagenAmpliada" src="" alt="Imagen ampliada">
-  </div>
-  
-  <div id="masInfo">
-    <span class="close" onclick="cerrarMasInfo()">&times;</span>
-    <div id="contenidoMasInfo"></div>
-  </div>
-  
-  <script>
-    // Definimos las capas de mapas con ubicaciones propias
-    const capas = {
-      capa1: {
-        imagen: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZj7SJ-_4B_Gpo5-ZRQM11xOKo_e_YSL4gc_xMF7VnwNtsm59gYutVg81ySDbe_1wNZcKuO2ahNapz4l51aO7pPcaP2kNbUdSFndlPaBLKOvGS_0fWqg_824txjcM1AmowixFBJQP5h1DHlWBp9EAzb4xGISZeZjr9_Yjouh_OEupla2JzFvuPGJEInPE/s1029/alcom%20plano.jpg",
-        ubicaciones: {
-          T001: { top: '277px', left: '92px', descripcion: 'Compresor T001', foto: 'https://acortar.link/NUl0j7', info: 'Datos técnicos del compresor T001' },
-          Chiller11: { top: '251px', left: '327px', descripcion: 'Chiller 11', foto: 'https://acortar.link/A4oL1V', info: 'Datos técnicos del Chiller 11' }
-        }
-      },
-      capa2: {
-        imagen: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZj7SJ-_4B_Gpo5-ZRQM11xOKo_e_YSL4gc_xMF7VnwNtsm59gYutVg81ySDbe_1wNZcKuO2ahNapz4l51aO7pPcaP2kNbUdSFndlPaBLKOvGS_0fWqg_824txjcM1AmowixFBJQP5h1DHlWBp9EAzb4xGISZeZjr9_Yjouh_OEupla2JzFvuPGJEInPE/s1029/alcom%20plano.jpg",
-        ubicaciones: {
-          R001: { top: '150px', left: '200px', descripcion: 'Unidad Refrigeración R001', foto: 'https://acortar.link/NUl0j7', info: 'Unidad principal de refrigeración' }
-        }
-      },
-      capa3: {
-        imagen: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZj7SJ-_4B_Gpo5-ZRQM11xOKo_e_YSL4gc_xMF7VnwNtsm59gYutVg81ySDbe_1wNZcKuO2ahNapz4l51aO7pPcaP2kNbUdSFndlPaBLKOvGS_0fWqg_824txjcM1AmowixFBJQP5h1DHlWBp9EAzb4xGISZeZjr9_Yjouh_OEupla2JzFvuPGJEInPE/s1029/alcom%20plano.jpg",
-        ubicaciones: {
-          S001: { top: '300px', left: '400px', descripcion: 'Subestación S001', foto: 'https://acortar.link/A4oL1V', info: 'Tablero de distribución eléctrica' }
-        }
-      }
-    };
+  <header>
+    <h1>Sistema de Aprendizaje de PLC</h1>
+    <nav>
+      <button id="btnLeccion">Lecciones</button>
+      <button id="btnEjercicio">Ejercicios</button>
+      <button id="btnSimulador">Simulador</button>
+    </nav>
+  </header>
 
-    let capaActual = "capa1";
-    const imagenMapa = document.getElementById('imagenMapa');
-    const mapa = document.getElementById('mapa');
-    const info = document.getElementById('info');
-    const coordsDisplay = document.getElementById('coords');
+  <main id="contenido">
+    <p>Bienvenido, selecciona una opción para empezar.</p>
+  </main>
 
-    function cambiarCapa() {
-      capaActual = document.getElementById('capa').value;
-      cargarCapa();
-    }
+  <footer>
+    <p>© 2025 Sistema PLC - Tenorio</p>
+  </footer>
 
-    function cargarCapa() {
-      const capa = capas[capaActual];
-      imagenMapa.src = capa.imagen;
-
-      // Borrar puntos anteriores
-      document.querySelectorAll('.ubicacion').forEach(el => el.remove());
-      info.style.display = 'none';
-    }
-
-    function buscarUbicacion() {
-      const numero = document.getElementById('busqueda').value;
-      const capa = capas[capaActual];
-      
-      // limpiar ubicaciones previas
-      document.querySelectorAll('.ubicacion').forEach(el => el.remove());
-      cerrarMasInfo();
-      info.style.display = 'none';
-
-      if (capa.ubicaciones[numero]) {
-        const ubicacion = capa.ubicaciones[numero];
-        const marcador = document.createElement('div');
-        marcador.className = 'ubicacion';
-        marcador.style.top = ubicacion.top;
-        marcador.style.left = ubicacion.left;
-        mapa.appendChild(marcador);
-
-        marcador.addEventListener('click', function() {
-          info.style.display = 'block';
-          info.style.top = ubicacion.top;
-          info.style.left = `${parseInt(ubicacion.left) + 30}px`;
-          info.innerHTML = `
-            <div style="position: relative; padding: 20px;">
-              <span onclick="cerrarInfo()" style="
-                position: absolute; top: -10px; right: -10px;
-                cursor: pointer; background-color: white;
-                color: black; padding: 5px 10px;
-                border-radius: 50%; font-weight: bold;
-                z-index: 100;">X</span>
-              <p onclick="abrirMasInfo('${numero}')">${ubicacion.descripcion}</p>
-              <img src="${ubicacion.foto}" alt="Foto del equipo ${numero}" onclick="ampliarImagen('${ubicacion.foto}')" style="margin-top: 10px;">
-            </div>`;
-        });
-      } else {
-        alert('Número de equipo no encontrado en esta capa');
-      }
-    }
-
-    function ampliarImagen(foto) {
-      const modal = document.getElementById('modalImagen');
-      const imagenAmpliada = document.getElementById('imagenAmpliada');
-      imagenAmpliada.src = foto;
-      modal.style.display = 'block';
-    }
-    function cerrarModal() { document.getElementById('modalImagen').style.display = 'none'; }
-    function abrirMasInfo(numero) {
-      const masInfo = document.getElementById('masInfo');
-      const contenido = document.getElementById('contenidoMasInfo');
-      contenido.innerHTML = `<p>${capas[capaActual].ubicaciones[numero].info}</p>`;
-      masInfo.style.display = 'block';
-    }
-    function cerrarInfo() { info.style.display = 'none'; }
-    function cerrarMasInfo() { document.getElementById('masInfo').style.display = 'none'; }
-
-    // Coordenadas en tiempo real
-    imagenMapa.addEventListener('mousemove', function(event) {
-      const rect = imagenMapa.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      coordsDisplay.innerHTML = `X: ${x.toFixed(0)}, Y: ${y.toFixed(0)}`;
-    });
-
-    // Inicializar capa por defecto
-    cargarCapa();
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
