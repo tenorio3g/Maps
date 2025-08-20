@@ -11,22 +11,31 @@
         <h1>Tenorio Smart System</h1>
     </header>
 
-    <aside id="menu-lateral">
-        <button data-modulo="actividades">📅 Actividades</button>
-        <button data-modulo="medidores">💧 Monitoreo Agua</button>
-        <button data-modulo="mapa">🗺️ Mapa de Equipos</button>
-        <button data-modulo="produccion">🚚 Carrito / Logística</button>
-    </aside>
-
     <main id="dashboard">
-        <h2>Bienvenido Ingeniero Tenorio</h2>
-        <p>Seleccione un módulo del menú para ver la información.</p>
+        <div class="botones-dashboard">
+            <button onclick="abrirModulo('https://plan-inteligente.onrender.com/')">
+                📅 Plan de Actividades
+            </button>
+            <button onclick="abrirModulo('https://su-proyecto-medidores.onrender.com/')">
+                💧 Monitoreo de Agua
+            </button>
+            <button onclick="abrirModulo('https://su-proyecto-mapa.onrender.com/')">
+                🗺️ Mapa de Equipos
+            </button>
+            <button onclick="abrirModulo('https://su-proyecto-carrito.onrender.com/')">
+                🚚 Carrito / Logística
+            </button>
+        </div>
     </main>
 
     <footer>
         © 2025 Tenorio Smart System
     </footer>
 
-    <script src="app.js"></script>
+    <script>
+        function abrirModulo(url) {
+            window.open(url, "_blank"); // abre en nueva pestaña
+        }
+    </script>
 </body>
 </html>
