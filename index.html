@@ -1,41 +1,24 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tenorio Smart System</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>Tenorio Smart System</h1>
-    </header>
+<main id="dashboard">
+    <div class="botones-dashboard">
+        <button onclick="abrirModulo('https://plan-inteligente.onrender.com/')">
+            📅 Plan de Actividades <span class="estado estado-verde"></span>
+        </button>
+        <button onclick="abrirModulo('https://su-proyecto-medidores.onrender.com/')">
+            💧 Monitoreo de Agua <span class="estado estado-amarillo"></span>
+        </button>
+        <button onclick="abrirModulo('https://su-proyecto-mapa.onrender.com/')">
+            🗺️ Mapa de Equipos <span class="estado estado-verde"></span>
+        </button>
+        <button onclick="abrirModulo('https://su-proyecto-carrito.onrender.com/')">
+            🚚 Carrito / Logística <span class="estado estado-rojo"></span>
+        </button>
+    </div>
 
-    <main id="dashboard">
-        <div class="botones-dashboard">
-            <button onclick="abrirModulo('https://plan-inteligente.onrender.com/')">
-                📅 Plan de Actividades
-            </button>
-            <button onclick="abrirModulo('https://su-proyecto-medidores.onrender.com/')">
-                💧 Monitoreo de Agua
-            </button>
-            <button onclick="abrirModulo('https://su-proyecto-mapa.onrender.com/')">
-                🗺️ Mapa de Equipos
-            </button>
-            <button onclick="abrirModulo('https://su-proyecto-carrito.onrender.com/')">
-                🚚 Carrito / Logística
-            </button>
-        </div>
-    </main>
-
-    <footer>
-        © 2025 Tenorio Smart System
-    </footer>
-
-    <script>
-        function abrirModulo(url) {
-            window.open(url, "_blank"); // abre en nueva pestaña
-        }
-    </script>
-</body>
-</html>
+    <h3 style="margin-top: 40px;">Otros Proyectos</h3>
+    <div class="botones-dashboard">
+        <button onclick="abrirModulo('https://leer-rapido.onrender.com/')">
+            📖 Leer Rápido
+        </button>
+        <!-- Más proyectos se pueden agregar aquí -->
+    </div>
+</main>
