@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Aprendizaje PLC</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenorio Smart System</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Sistema de Aprendizaje de PLC</h1>
-    <nav>
-      <button id="btnLeccion">Lecciones</button>
-      <button id="btnEjercicio">Ejercicios</button>
-      <button id="btnSimulador">Simulador</button>
-    </nav>
-  </header>
+    <header>
+        <h1>Tenorio Smart System</h1>
+    </header>
 
-  <main id="contenido">
-    <p>Bienvenido, selecciona una opción para empezar.</p>
-  </main>
+    <aside id="menu-lateral">
+        <button data-modulo="actividades">📅 Actividades</button>
+        <button data-modulo="medidores">💧 Monitoreo Agua</button>
+        <button data-modulo="mapa">🗺️ Mapa de Equipos</button>
+        <button data-modulo="produccion">🚚 Carrito / Logística</button>
+    </aside>
 
-  <footer>
-    <p>© 2025 Sistema PLC - Tenorio</p>
-  </footer>
+    <main id="dashboard">
+        <h2>Bienvenido Ingeniero Tenorio</h2>
+        <p>Seleccione un módulo del menú para ver la información.</p>
+    </main>
 
-  <script src="app.js"></script>
+    <footer>
+        © 2025 Tenorio Smart System
+    </footer>
+
+    <script src="app.js"></script>
 </body>
 </html>
